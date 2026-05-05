@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الخطة التشغيلية 1447هـ — سمرة بن جندب</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root{
+  --em:#0d7f5f;--em-l:#10a577;--em-d:#085041;--em-p:#d4f5e9;
+  --gd:#c4973a;--gd-l:#e8c06a;--gd-p:#fdf4e3;
+  --nv:#0a2540;--nv-m:#1a3a5c;
+  --cr:#faf8f3;--wh:#ffffff;--ink:#1c1c1e;--mu:#6b7280;
+  --lb:rgba(13,127,95,0.15);
+  --sh:0 2px 12px rgba(0,0,0,0.06),0 1px 3px rgba(0,0,0,0.04);
+  --sh2:0 8px 32px rgba(0,0,0,0.1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px}
+body{font-family:'Tajawal',sans-serif;font-size:16px;line-height:1.6;background:var(--cr);color:var(--ink);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 70% 50% at 10% 10%,rgba(13,127,95,0.07),transparent 60%),radial-gradient(ellipse 50% 60% at 90% 85%,rgba(196,151,58,0.06),transparent 55%);pointer-events:none;z-index:0}
+.wrap{position:relative;z-index:1;max-width:1360px;margin:0 auto;padding:0 20px 60px}
+
+/* ══ LOGIN SCREEN ══ */
+#login-screen{position:fixed;inset:0;background:linear-gradient(135deg,var(--nv) 0%,var(--em-d) 60%,#0b5c45 100%);display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column}
+#login-screen::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.025'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");pointer-events:none}
+.login-box{position:relative;background:rgba(255,255,255,0.97);border-radius:28px;padding:44px 40px;width:380px;text-align:center;box-shadow:0 32px 80px rgba(0,0,0,0.35);animation:slideUp 0.5s cubic-bezier(0.34,1.56,0.64,1)}
+.login-logo{width:72px;height:72px;background:linear-gradient(135deg,var(--em),var(--nv));border-radius:22px;display:flex;align-items:center;justify-content:center;font-size:34px;margin:0 auto 20px;box-shadow:0 8px 24px rgba(13,127,95,0.35)}
+.login-title{font-family:'Cairo',sans-serif;font-size:22px;font-weight:900;color:var(--nv);margin-bottom:4px}
+.login-sub{font-size:14px;color:var(--mu);margin-bottom:28px;line-height:1.5}
+.login-input{width:100%;padding:13px 16px;border:1.5px solid #e5e7eb;border-radius:12px;font-family:'Tajawal',sans-serif;font-size:15px;color:var(--ink);margin-bottom:12px;outline:none;transition:border-color 0.2s;text-align:right;direction:rtl}
+.login-input:focus{border-color:var(--em);box-shadow:0 0 0 3px rgba(13,127,95,0.1)}
+.login-btn{width:100%;background:linear-gradient(135deg,var(--em),var(--em-d));color:#fff;border:none;border-radius:12px;padding:14px;font-size:16px;font-weight:700;font-family:'Tajawal',sans-serif;cursor:pointer;transition:all 0.2s;margin-top:4px;position:relative;overflow:hidden}
+.login-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(13,127,95,0.4)}
+.login-btn:active{transform:translateY(0)}
+.login-btn:disabled{opacity:0.7;cursor:not-allowed;transform:none}
+.login-err{color:#dc2626;font-size:13px;margin-top:10px;padding:10px 14px;background:#fef2f2;border-radius:10px;border:1px solid #fecaca;display:none}
+.login-err.show{display:block}
+.login-spinner{display:none;width:20px;height:20px;border:2.5px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto}
+.login-spinner.show{display:block}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ══ FIREBASE STATUS BAR ══ */
+.fb-bar{background:var(--nv);padding:8px 20px;display:flex;align-items:center;justify-content:space-between;font-size:13px;color:rgba(255,255,255,0.7);position:relative;z-index:50}
+.fb-status{display:flex;align-items:center;gap:8px}
+.fb-dot{width:8px;height:8px;border-radius:50%;background:#9ca3af;transition:background 0.3s}
+.fb-dot.online{background:#4ade80;box-shadow:0 0 6px rgba(74,222,128,0.5)}
+.fb-dot.syncing{background:#fbbf24;animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.fb-user-info{display:flex;align-items:center;gap:10px}
+.fb-avatar{width:28px;height:28px;background:var(--gd);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff}
+.fb-logout{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.8);padding:4px 12px;border-radius:8px;font-size:12px;font-family:'Tajawal',sans-serif;cursor:pointer;transition:all 0.2s}
+.fb-logout:hover{background:rgba(220,38,38,0.3);border-color:rgba(220,38,38,0.4);color:#fff}
+
+/* ══ HERO ══ */
+.hero{background:linear-gradient(135deg,var(--nv) 0%,var(--em-d) 55%,#0b5c45 100%);border-radius:0 0 36px 36px;padding:36px 48px 40px;margin:0 -20px 24px;position:relative;overflow:hidden;box-shadow:0 16px 48px rgba(0,0,0,0.22)}
+.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.025'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");pointer-events:none}
+.hero::after{content:'';position:absolute;top:-80px;left:-80px;width:380px;height:380px;border-radius:50%;background:radial-gradient(circle,rgba(196,151,58,0.16) 0%,transparent 70%);pointer-events:none}
+.hero-inner{position:relative;display:flex;align-items:center;justify-content:space-between;gap:28px}
+.hero-eyebrow{font-size:13px;color:rgba(255,255,255,0.5);letter-spacing:0.06em;margin-bottom:8px}
+.hero h1{font-family:'Cairo',sans-serif;font-size:34px;font-weight:900;color:#fff;line-height:1.15;margin-bottom:6px}
+.hero-sub{font-size:16px;color:rgba(255,255,255,0.6);margin-bottom:18px}
+.hero-pills{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.pill{padding:6px 14px;border-radius:20px;font-size:13px;font-weight:500;border:1px solid}
+.pill-g{background:rgba(13,127,95,0.25);border-color:rgba(16,165,119,0.4);color:#7ee8c4}
+.pill-d{background:rgba(196,151,58,0.2);border-color:rgba(196,151,58,0.4);color:var(--gd-l)}
+.hero-dir{display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.14);border-radius:12px;padding:10px 16px}
+.dir-av{width:38px;height:38px;background:var(--gd);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#fff}
+.dir-info span{display:block;font-size:12px;color:rgba(255,255,255,0.5)}
+.dir-info strong{font-size:15px;color:#fff;font-weight:700}
+.hero-stats{display:flex;gap:8px;flex-shrink:0}
+.hstat{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:18px 20px;text-align:center;min-width:90px;backdrop-filter:blur(8px);transition:transform 0.2s}
+.hstat:hover{transform:translateY(-3px)}
+.hstat-n{font-family:'Cairo',sans-serif;font-size:30px;font-weight:900;color:var(--gd-l);display:block;line-height:1}
+.hstat-l{font-size:12px;color:rgba(255,255,255,0.5);margin-top:3px;display:block}
+
+/* ══ KPI ROW ══ */
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
+.kpi{background:var(--wh);border-radius:18px;padding:20px 22px;box-shadow:var(--sh);border:1px solid rgba(0,0,0,0.04);position:relative;overflow:hidden;transition:all 0.3s;display:flex;align-items:center;gap:16px}
+.kpi:hover{transform:translateY(-4px);box-shadow:var(--sh2)}
+.kpi::after{content:'';position:absolute;top:0;right:0;bottom:0;width:4px;border-radius:18px 0 0 18px}
+.kpi.g::after{background:linear-gradient(to bottom,var(--em-l),var(--em))}
+.kpi.a::after{background:linear-gradient(to bottom,#fbbf24,#d97706)}
+.kpi.r::after{background:linear-gradient(to bottom,#f87171,#dc2626)}
+.kpi.b::after{background:linear-gradient(to bottom,#60a5fa,#2563eb)}
+.kpi-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.kpi.g .kpi-icon{background:#d1fae5}
+.kpi.a .kpi-icon{background:#fef3c7}
+.kpi.r .kpi-icon{background:#fee2e2}
+.kpi.b .kpi-icon{background:#dbeafe}
+.kpi-num{font-family:'Cairo',sans-serif;font-size:32px;font-weight:900;line-height:1;display:block;margin-bottom:2px}
+.kpi.g .kpi-num{color:var(--em)}
+.kpi.a .kpi-num{color:#d97706}
+.kpi.r .kpi-num{color:#dc2626}
+.kpi.b .kpi-num{color:#2563eb}
+.kpi-lbl{font-size:15px;color:var(--mu);font-weight:500}
+
+/* ══ OVERALL PROGRESS ══ */
+.op-card{background:var(--wh);border-radius:20px;padding:22px 28px;box-shadow:var(--sh);border:1px solid rgba(0,0,0,0.04);margin-bottom:20px}
+.op-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.op-title{font-family:'Cairo',sans-serif;font-size:18px;font-weight:700;color:var(--nv)}
+.op-pct{font-family:'Cairo',sans-serif;font-size:36px;font-weight:900;color:var(--em)}
+.op-track{height:22px;background:var(--cr);border-radius:11px;overflow:hidden;border:1px solid var(--lb);margin-bottom:8px}
+.op-fill{height:100%;border-radius:11px;background:linear-gradient(to left,var(--em-l),var(--em));transition:width 1.2s cubic-bezier(0.34,1.56,0.64,1)}
+.op-ticks{display:flex;justify-content:space-between;font-size:13px;color:var(--mu)}
+
+/* ══ NAV ══ */
+.nav-wrap{position:sticky;top:0;z-index:100;background:rgba(250,248,243,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--lb);margin:0 -20px;padding:0 20px}
+.nav-tabs{display:flex;gap:0;overflow-x:auto;scrollbar-width:none}
+.nav-tabs::-webkit-scrollbar{display:none}
+.nav-tab{display:flex;align-items:center;gap:7px;padding:15px 20px;font-size:15px;font-weight:500;color:var(--mu);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:all 0.25s;background:none;border-top:none;border-left:none;border-right:none;font-family:'Tajawal',sans-serif}
+.nav-tab:hover{color:var(--em)}
+.nav-tab.active{color:var(--em);border-bottom-color:var(--em);font-weight:700}
+.tc{background:var(--em-p);color:var(--em-d);font-size:11px;font-weight:700;padding:2px 7px;border-radius:10px}
+.nav-tab.active .tc{background:var(--em);color:#fff}
+
+/* ══ PANELS ══ */
+.panel{display:none;padding-top:28px;animation:fadeUp 0.35s ease}
+.panel.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+
+/* ══ CHARTS ══ */
+.charts-row{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}
+.charts-row.three{grid-template-columns:1.4fr 1fr 1fr}
+.chart-card{background:var(--wh);border-radius:20px;padding:22px 24px;box-shadow:var(--sh);border:1px solid rgba(0,0,0,0.04)}
+.chart-card.full{grid-column:span 2}
+.cc-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.cc-title{font-family:'Cairo',sans-serif;font-size:17px;font-weight:700;color:var(--nv)}
+.cc-sub{font-size:13px;color:var(--mu);margin-top:2px}
+.chart-wrap{position:relative;width:100%}
+.h260{height:260px}.h220{height:220px}
+.legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.leg-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--mu)}
+.leg-dot{width:11px;height:11px;border-radius:3px;flex-shrink:0}
+
+/* ══ INSIGHTS ══ */
+.insights{background:var(--nv);border-radius:20px;padding:22px 26px;margin-bottom:20px;position:relative;overflow:hidden}
+.insights::before{content:'+ KEY INSIGHTS';position:absolute;top:14px;right:20px;font-size:11px;color:rgba(255,255,255,0.3);letter-spacing:0.1em;font-weight:700}
+.insights-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:28px}
+.insight-box{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:16px}
+.ib-icon{font-size:22px;margin-bottom:8px;display:block}
+.ib-text{font-size:14px;color:rgba(255,255,255,0.8);line-height:1.5}
+.ib-text strong{color:#fff;font-weight:700}
+.ib-badge{display:inline-block;font-size:11px;font-weight:700;padding:3px 8px;border-radius:8px;margin-bottom:8px}
+.ib-g{background:rgba(16,165,119,0.25);color:#6ee7b7}
+.ib-a{background:rgba(251,191,36,0.2);color:#fbbf24}
+.ib-r{background:rgba(248,113,113,0.2);color:#f87171}
+.ib-b{background:rgba(96,165,250,0.2);color:#93c5fd}
+
+/* ══ SEC TITLE ══ */
+.sec-title{font-family:'Cairo',sans-serif;font-size:22px;font-weight:900;color:var(--nv);margin-bottom:18px;display:flex;align-items:center;gap:12px}
+.sec-title::after{content:'';flex:1;height:1.5px;background:linear-gradient(to left,transparent,var(--lb))}
+.sec-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.si-g{background:var(--em-p)}.si-d{background:var(--gd-p)}.si-n{background:rgba(10,37,64,0.08)}
+
+/* ══ AXIS GRID ══ */
+.axis-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.axis-card{background:var(--wh);border-radius:20px;overflow:hidden;box-shadow:var(--sh);border:1px solid rgba(0,0,0,0.04);transition:box-shadow 0.3s}
+.axis-card:hover{box-shadow:var(--sh2)}
+.axis-card.full{grid-column:span 2}
+.axis-header{padding:14px 20px;font-family:'Cairo',sans-serif;font-size:15px;font-weight:700;display:flex;align-items:center;gap:10px}
+.ah-em{background:linear-gradient(to left,rgba(13,127,95,0.08),rgba(13,127,95,0.15));color:var(--em-d);border-bottom:2px solid rgba(13,127,95,0.2)}
+.ah-bl{background:linear-gradient(to left,rgba(29,78,216,0.06),rgba(29,78,216,0.13));color:#1e3a8a;border-bottom:2px solid rgba(29,78,216,0.15)}
+.ah-gd{background:linear-gradient(to left,rgba(196,151,58,0.08),rgba(196,151,58,0.14));color:#7c5a1e;border-bottom:2px solid rgba(196,151,58,0.2)}
+.ah-pu{background:linear-gradient(to left,rgba(109,40,217,0.07),rgba(109,40,217,0.13));color:#4c1d95;border-bottom:2px solid rgba(109,40,217,0.15)}
+.ah-nv{background:linear-gradient(to left,rgba(10,37,64,0.07),rgba(10,37,64,0.13));color:var(--nv);border-bottom:2px solid rgba(10,37,64,0.15)}
+.ah-gr{background:linear-gradient(to left,rgba(77,124,15,0.07),rgba(77,124,15,0.13));color:#365314;border-bottom:2px solid rgba(77,124,15,0.15)}
+.goal-list{padding:12px 14px}
+
+/* ══ GOAL ITEM ══ */
+.goal-item{border-radius:14px;padding:14px 16px;margin-bottom:10px;border:2px solid transparent;transition:all 0.3s;position:relative;overflow:hidden}
+.goal-item::before{content:'';position:absolute;top:0;right:0;bottom:0;width:4px;border-radius:0 14px 14px 0}
+.goal-item.done{background:#f0fdf4;border-color:#bbf7d0}.goal-item.done::before{background:linear-gradient(to bottom,#4ade80,#16a34a)}
+.goal-item.pending{background:#fffbeb;border-color:#fde68a}.goal-item.pending::before{background:linear-gradient(to bottom,#fbbf24,#d97706)}
+.goal-item.notdone{background:#fef2f2;border-color:#fecaca}.goal-item.notdone::before{background:linear-gradient(to bottom,#f87171,#dc2626)}
+.goal-item.none{background:var(--cr);border-color:transparent}.goal-item.none::before{background:#e5e7eb}
+.goal-name{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.goal-name::before{content:'';width:8px;height:8px;border-radius:50%;flex-shrink:0;background:#d1d5db}
+.done .goal-name::before{background:#16a34a}
+.pending .goal-name::before{background:#d97706}
+.notdone .goal-name::before{background:#dc2626}
+.goal-chips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
+.chip{font-size:12px;padding:3px 10px;border-radius:20px;font-weight:500;border:1px solid}
+.cg{background:rgba(13,127,95,0.08);border-color:rgba(13,127,95,0.2);color:var(--em-d)}
+.cb{background:rgba(29,78,216,0.07);border-color:rgba(29,78,216,0.18);color:#1e3a8a}
+.cd{background:rgba(196,151,58,0.09);border-color:rgba(196,151,58,0.22);color:#7c5a1e}
+.cm{background:rgba(107,114,128,0.07);border-color:rgba(107,114,128,0.18);color:var(--mu)}
+.status-btns{display:flex;gap:6px;flex-wrap:wrap}
+.sbtn{border:none;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Tajawal',sans-serif;transition:all 0.2s;display:flex;align-items:center;gap:5px}
+.sbtn:hover{transform:scale(1.04)}
+.sb-d{background:#d1fae5;color:#065f46;border:1.5px solid #6ee7b7}
+.sb-d.on{background:#16a34a;color:#fff;box-shadow:0 2px 8px rgba(22,163,74,0.35)}
+.sb-p{background:#fef3c7;color:#92400e;border:1.5px solid #fde68a}
+.sb-p.on{background:#d97706;color:#fff;box-shadow:0 2px 8px rgba(217,119,6,0.35)}
+.sb-n{background:#fee2e2;color:#991b1b;border:1.5px solid #fca5a5}
+.sb-n.on{background:#dc2626;color:#fff;box-shadow:0 2px 8px rgba(220,38,38,0.35)}
+.tb{background:none;border:1px dashed var(--lb);border-radius:8px;padding:4px 10px;font-size:12px;color:var(--mu);cursor:pointer;font-family:'Tajawal',sans-serif;transition:all 0.2s}
+.tb:hover{border-color:var(--em);color:var(--em)}
+.notes-wrap{display:none;margin-top:8px}.notes-wrap.open{display:block;animation:fadeUp 0.2s ease}
+.goal-notes{width:100%;border:1.5px solid var(--lb);border-radius:10px;padding:10px 12px;font-size:14px;font-family:'Tajawal',sans-serif;color:var(--ink);background:var(--wh);resize:vertical;min-height:70px;transition:border-color 0.2s;outline:none}
+.goal-notes:focus{border-color:var(--em)}
+.nsave{margin-top:6px;background:var(--em);color:#fff;border:none;border-radius:8px;padding:7px 18px;font-size:13px;font-weight:700;font-family:'Tajawal',sans-serif;cursor:pointer;transition:background 0.2s}
+.nsave:hover{background:var(--em-d)}
+.saved-note{font-size:13px;color:var(--mu);margin-top:6px;padding:8px 12px;background:rgba(13,127,95,0.05);border-radius:8px;border-right:3px solid var(--em);display:none}
+.saved-note.vis{display:block}
+
+/* ══ SYNC INDICATOR on goal ══ */
+.sync-pill{display:inline-flex;align-items:center;gap:4px;font-size:10px;padding:2px 7px;border-radius:8px;font-weight:600;position:absolute;top:10px;left:10px}
+.sync-ok{background:#d1fae5;color:#065f46}
+.sync-ing{background:#fef3c7;color:#92400e}
+.sync-err{background:#fee2e2;color:#991b1b}
+
+/* ══ TRACKING TABLE ══ */
+.track-wrap{background:var(--wh);border-radius:20px;overflow:hidden;box-shadow:var(--sh);border:1px solid rgba(0,0,0,0.04)}
+.track-head{padding:18px 24px;background:linear-gradient(to left,rgba(13,127,95,0.05),rgba(10,37,64,0.05));border-bottom:1.5px solid var(--lb);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.track-head h3{font-family:'Cairo',sans-serif;font-size:18px;font-weight:700;color:var(--nv)}
+.exp-btn{background:var(--nv);color:#fff;border:none;border-radius:10px;padding:9px 20px;font-size:14px;font-weight:700;font-family:'Tajawal',sans-serif;cursor:pointer;transition:background 0.2s}
+.exp-btn:hover{background:var(--em)}
+table{width:100%;border-collapse:collapse}
+th{background:var(--cr);padding:12px 16px;font-size:14px;font-weight:700;color:var(--nv);text-align:right;border-bottom:1px solid var(--lb)}
+td{padding:12px 16px;font-size:14px;color:var(--ink);border-bottom:1px solid rgba(0,0,0,0.04);vertical-align:middle}
+tr:hover td{background:rgba(13,127,95,0.02)}
+tr:last-child td{border-bottom:none}
+.ts{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:20px;font-size:13px;font-weight:600}
+.ts-d{background:#d1fae5;color:#065f46}.ts-p{background:#fef3c7;color:#92400e}
+.ts-n{background:#fee2e2;color:#991b1b}.ts-0{background:#f3f4f6;color:var(--mu)}
+.wbadge{display:inline-flex;align-items:center;justify-content:center;min-width:34px;height:34px;border-radius:50%;font-size:13px;font-weight:700;background:var(--em-p);color:var(--em-d);padding:0 6px}
+
+/* ══ SWOT ══ */
+.swot-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.swot-box{border-radius:20px;padding:24px;position:relative;overflow:hidden}
+.swot-box::before{content:attr(data-l);position:absolute;top:-12px;left:16px;font-family:'Cairo',sans-serif;font-size:80px;font-weight:900;opacity:0.055;line-height:1}
+.sw-s{background:#f0fdf4;border:1.5px solid #bbf7d0}.sw-s::before{color:#16a34a}
+.sw-w{background:#fef2f2;border:1.5px solid #fecaca}.sw-w::before{color:#dc2626}
+.sw-o{background:#eff6ff;border:1.5px solid #bfdbfe}.sw-o::before{color:#2563eb}
+.sw-t{background:#fffbeb;border:1.5px solid #fde68a}.sw-t::before{color:#d97706}
+.swot-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.sw-lbl{font-family:'Cairo',sans-serif;font-size:18px;font-weight:900}
+.sw-s .sw-lbl{color:#166534}.sw-w .sw-lbl{color:#991b1b}
+.sw-o .sw-lbl{color:#1e40af}.sw-t .sw-lbl{color:#92400e}
+.sw-tag{font-size:11px;font-weight:700;padding:3px 9px;border-radius:10px}
+.sw-s .sw-tag{background:#dcfce7;color:#166534}.sw-w .sw-tag{background:#fee2e2;color:#991b1b}
+.sw-o .sw-tag{background:#dbeafe;color:#1e40af}.sw-t .sw-tag{background:#fef3c7;color:#92400e}
+.swot-list{list-style:none}
+.swot-list li{padding:7px 0 7px 14px;font-size:14px;line-height:1.6;position:relative;border-bottom:1px solid rgba(0,0,0,0.05)}
+.swot-list li:last-child{border-bottom:none}
+.swot-list li::before{content:'';position:absolute;right:-14px;top:50%;transform:translateY(-50%);width:7px;height:7px;border-radius:50%}
+.sw-s .swot-list li{color:#14532d}.sw-s .swot-list li::before{background:#4ade80}
+.sw-w .swot-list li{color:#7f1d1d}.sw-w .swot-list li::before{background:#f87171}
+.sw-o .swot-list li{color:#1e3a8a}.sw-o .swot-list li::before{background:#60a5fa}
+.sw-t .swot-list li{color:#78350f}.sw-t .swot-list li::before{background:#fbbf24}
+
+/* ══ TOAST ══ */
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(70px);background:var(--nv);color:#fff;padding:13px 26px;border-radius:30px;font-size:14px;font-weight:500;z-index:9999;transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1);pointer-events:none;white-space:nowrap;box-shadow:0 8px 30px rgba(0,0,0,0.2)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* ══ MODAL ══ */
+.modal-ov{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:1000;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.modal-ov.open{display:flex;animation:fadeIn 0.2s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal{background:var(--wh);border-radius:24px;padding:30px;max-width:520px;width:90%;box-shadow:0 24px 80px rgba(0,0,0,0.2);animation:slideUp 0.3s cubic-bezier(0.34,1.56,0.64,1)}
+.modal-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
+.modal-ttl{font-family:'Cairo',sans-serif;font-size:20px;font-weight:700;color:var(--nv)}
+.modal-x{background:none;border:none;font-size:24px;cursor:pointer;color:var(--mu);line-height:1}
+.mstats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:22px}
+.mst{text-align:center;padding:14px;border-radius:14px}
+.mst span{display:block;font-size:12px;color:var(--mu);margin-bottom:4px}
+.mst strong{font-family:'Cairo',sans-serif;font-size:26px;font-weight:900}
+.ms-g{background:#d1fae5}.ms-g strong{color:#065f46}
+.ms-a{background:#fef3c7}.ms-a strong{color:#92400e}
+.ms-r{background:#fee2e2}.ms-r strong{color:#991b1b}
+.modal-btn{width:100%;background:var(--em);color:#fff;border:none;border-radius:12px;padding:14px;font-size:15px;font-weight:700;font-family:'Tajawal',sans-serif;cursor:pointer;transition:background 0.2s}
+.modal-btn:hover{background:var(--em-d)}
+
+.footer{margin-top:48px;text-align:center;padding:24px;border-top:1.5px dashed var(--lb);color:var(--mu);font-size:14px}
+.footer strong{color:var(--em-d)}
+
+@media(max-width:1000px){
+  .charts-row,.charts-row.three{grid-template-columns:1fr}
+  .chart-card.full{grid-column:span 1}
+  .kpi-row{grid-template-columns:repeat(2,1fr)}
+  .axis-grid{grid-template-columns:1fr}
+  .axis-card.full{grid-column:span 1}
+  .swot-grid{grid-template-columns:1fr}
+  .insights-grid{grid-template-columns:repeat(2,1fr)}
+  .hero-inner{flex-direction:column}
+  .hero-stats{flex-wrap:wrap;justify-content:center}
+}
+@media(max-width:600px){
+  html{font-size:15px}
+  .wrap{padding:0 12px 40px}
+  .hero{padding:28px 20px}
+  .hero h1{font-size:26px}
+  .kpi-row{grid-template-columns:1fr 1fr}
+  .insights-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ LOGIN SCREEN ══ -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">🏫</div>
+    <div class="login-title">الخطة التشغيلية 1447هـ</div>
+    <div class="login-sub">مدرسة سمرة بن جندب الابتدائية<br>يرجى تسجيل الدخول للمتابعة</div>
+    <input class="login-input" id="li-email" type="email" placeholder="📧 البريد الإلكتروني" autocomplete="email">
+    <input class="login-input" id="li-pass" type="password" placeholder="🔒 كلمة المرور" autocomplete="current-password">
+    <button class="login-btn" id="li-btn" onclick="doLogin()">
+      <span id="li-text">دخول إلى اللوحة</span>
+      <div class="login-spinner" id="li-spin"></div>
+    </button>
+    <div class="login-err" id="li-err"></div>
+  </div>
+</div>
+
+<!-- ══ MAIN APP (hidden until login) ══ -->
+<div id="app" style="display:none">
+
+<!-- Firebase Status Bar -->
+<div class="fb-bar">
+  <div class="fb-status">
+    <div class="fb-dot" id="fb-dot"></div>
+    <span id="fb-status-text">جاري الاتصال...</span>
+  </div>
+  <div class="fb-user-info">
+    <div class="fb-avatar" id="fb-avatar">—</div>
+    <span id="fb-email" style="font-size:13px;color:rgba(255,255,255,0.7)"></span>
+    <button class="fb-logout" onclick="doLogout()">تسجيل خروج</button>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow">وزارة التعليم — الإدارة العامة لمنطقة مكة المكرمة</div>
+      <h1>الخطة التشغيلية التفاعلية<br>للعام الدراسي 1447 هـ</h1>
+      <p class="hero-sub">مدرسة سمرة بن جندب الابتدائية والإمام خلاد لتحفيظ القرآن</p>
+      <div class="hero-pills">
+        <span class="pill pill-g">🎓 مرحلة ابتدائية</span>
+        <span class="pill pill-d">📋 تعليم عام بنين</span>
+        <span class="pill pill-g">🌅 دوام صباحي حكومي</span>
+      </div>
+      <div class="hero-dir">
+        <div class="dir-av">ي</div>
+        <div class="dir-info"><span>مدير المدرسة</span><strong>يحيى بن محمد الزهراني</strong></div>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="hstat"><span class="hstat-n" id="h-total">36</span><span class="hstat-l">إجمالي البرامج</span></div>
+      <div class="hstat"><span class="hstat-n" id="h-done" style="color:#6ee7b7">0</span><span class="hstat-l">تم تنفيذها</span></div>
+      <div class="hstat"><span class="hstat-n" id="h-pct" style="color:var(--gd-l)">0%</span><span class="hstat-l">نسبة الإنجاز</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- KPI ROW -->
+<div class="kpi-row">
+  <div class="kpi g"><div class="kpi-icon">✅</div><div><span class="kpi-num" id="kpi-d">0</span><div class="kpi-lbl">تم تنفيذه</div></div></div>
+  <div class="kpi a"><div class="kpi-icon">⏳</div><div><span class="kpi-num" id="kpi-p">0</span><div class="kpi-lbl">قيد التنفيذ</div></div></div>
+  <div class="kpi r"><div class="kpi-icon">❌</div><div><span class="kpi-num" id="kpi-n">0</span><div class="kpi-lbl">لم يُنفَّذ</div></div></div>
+  <div class="kpi b"><div class="kpi-icon">📋</div><div><span class="kpi-num" id="kpi-u">36</span><div class="kpi-lbl">لم يُحدَّث</div></div></div>
+</div>
+
+<!-- PROGRESS -->
+<div class="op-card">
+  <div class="op-head">
+    <div><div class="op-title">📊 نسبة الإنجاز الإجمالية للخطة التشغيلية</div><div style="font-size:14px;color:var(--mu);margin-top:2px">الفصلان الدراسيان — 1447هـ</div></div>
+    <span class="op-pct" id="op-pct">0%</span>
+  </div>
+  <div class="op-track"><div class="op-fill" id="op-fill" style="width:0%"></div></div>
+  <div class="op-ticks"><span>0%</span><span>25%</span><span>50%</span><span>75%</span><span>100%</span></div>
+</div>
+
+<!-- NAV -->
+<div class="nav-wrap">
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="switchTab('charts',this)">📊 لوحة البيانات</button>
+    <button class="nav-tab" onclick="switchTab('students',this)">🎒 الطلاب <span class="tc" id="tc-s">0/16</span></button>
+    <button class="nav-tab" onclick="switchTab('teachers',this)">📚 المعلمون <span class="tc" id="tc-t">0/10</span></button>
+    <button class="nav-tab" onclick="switchTab('curriculum',this)">📖 المنهج <span class="tc" id="tc-c">0/6</span></button>
+    <button class="nav-tab" onclick="switchTab('activity',this)">⚽ النشاط <span class="tc" id="tc-a">0/2</span></button>
+    <button class="nav-tab" onclick="switchTab('community',this)">🏘️ البيئة <span class="tc" id="tc-com">0/2</span></button>
+    <button class="nav-tab" onclick="switchTab('building',this)">🏛️ المبنى <span class="tc" id="tc-b">0/2</span></button>
+    <button class="nav-tab" onclick="switchTab('swot',this)">🔍 تحليل الواقع</button>
+    <button class="nav-tab" onclick="switchTab('tracking',this)">📋 سجل المتابعة</button>
+  </div>
+</div>
+
+<!-- CHARTS PANEL -->
+<div id="panel-charts" class="panel active">
+  <div class="insights">
+    <div class="insights-grid">
+      <div class="insight-box"><span class="ib-icon">📈</span><span class="ib-badge ib-g">محور الطلاب</span><p class="ib-text">يضم <strong>16 برنامجاً</strong> أكبر محور في الخطة يشمل 7 أهداف عامة شاملة</p></div>
+      <div class="insight-box"><span class="ib-icon">🎯</span><span class="ib-badge ib-b">مؤشر الإنجاز</span><p class="ib-text">المستهدف <strong>90–100%</strong> في معظم المؤشرات عبر جميع محاور الخطة</p></div>
+      <div class="insight-box"><span class="ib-icon">⚠️</span><span class="ib-badge ib-a">نقطة انتباه</span><p class="ib-text">غياب رائد نشاط مفرغ يُعدّ <strong>أبرز التهديدات</strong> لتنفيذ الأنشطة والطابور</p></div>
+      <div class="insight-box"><span class="ib-icon">☁️</span><span class="ib-badge ib-b">Firebase Live</span><p class="ib-text">البيانات تُحفظ <strong>فورياً على السحابة</strong> وتتزامن مع جميع الأجهزة في الوقت الحقيقي</p></div>
+    </div>
+  </div>
+  <div class="charts-row">
+    <div class="chart-card"><div class="cc-head"><div><div class="cc-title">توزيع حالة البرامج</div><div class="cc-sub">يتحدث فورياً مع كل تغيير</div></div></div><div class="chart-wrap h260"><canvas id="chartDonut" role="img" aria-label="مخطط دائري لحالة تنفيذ البرامج">توزيع الحالات</canvas></div><div class="legend" id="legendDonut"></div></div>
+    <div class="chart-card"><div class="cc-head"><div><div class="cc-title">نسبة الإنجاز حسب المحور</div><div class="cc-sub">يتحدث فورياً مع كل تغيير</div></div></div><div class="chart-wrap h260"><canvas id="chartBar" role="img" aria-label="مخطط أعمدة أفقية للإنجاز">الإنجاز حسب المحور</canvas></div></div>
+  </div>
+  <div class="charts-row three">
+    <div class="chart-card"><div class="cc-head"><div><div class="cc-title">مؤشرات الأداء المستهدفة</div></div></div><div class="chart-wrap h220"><canvas id="chartLine" role="img" aria-label="مخطط خطي للمؤشرات">المؤشرات</canvas></div></div>
+    <div class="chart-card"><div class="cc-head"><div class="cc-title">مقارنة المحاور الستة</div></div><div class="chart-wrap h220"><canvas id="chartRadar" role="img" aria-label="مخطط رادار للمحاور">الرادار</canvas></div></div>
+    <div class="chart-card"><div class="cc-head"><div class="cc-title">عدد البرامج لكل محور</div></div><div class="chart-wrap h220"><canvas id="chartMini" role="img" aria-label="مخطط أعمدة لعدد البرامج">البرامج</canvas></div></div>
+  </div>
+  <div class="charts-row">
+    <div class="chart-card full"><div class="cc-head"><div><div class="cc-title">توزيع البرامج والأهداف حسب المحاور</div><div class="cc-sub">مقارنة شاملة بين جميع المحاور الستة</div></div></div><div class="chart-wrap h260"><canvas id="chartStacked" role="img" aria-label="مخطط متراكم">التوزيع</canvas></div><div class="legend" id="legendStacked" style="margin-top:12px"></div></div>
+  </div>
+</div>
+
+<div id="panel-students" class="panel"><div class="sec-title"><div class="sec-icon si-g">🎒</div> المحور الأول: الطلاب</div><div class="axis-grid" id="grid-students"></div></div>
+<div id="panel-teachers" class="panel"><div class="sec-title"><div class="sec-icon si-n">📚</div> المحور الثاني: المعلمون</div><div class="axis-grid" id="grid-teachers"></div></div>
+<div id="panel-curriculum" class="panel"><div class="sec-title"><div class="sec-icon si-d">📖</div> المحور الثالث: المنهج المدرسي</div><div class="axis-grid" id="grid-curriculum"></div></div>
+<div id="panel-activity" class="panel"><div class="sec-title"><div class="sec-icon si-g">⚽</div> المحور الرابع: النشاط المدرسي</div><div class="axis-grid" id="grid-activity"></div></div>
+<div id="panel-community" class="panel"><div class="sec-title"><div class="sec-icon si-d">🏘️</div> المحور الخامس: البيئة والمجتمع</div><div class="axis-grid" id="grid-community"></div></div>
+<div id="panel-building" class="panel"><div class="sec-title"><div class="sec-icon si-n">🏛️</div> المحور السادس: المبنى المدرسي</div><div class="axis-grid" id="grid-building"></div></div>
+
+<div id="panel-swot" class="panel">
+  <div class="sec-title"><div class="sec-icon si-n">🔍</div> تحليل واقع المدرسة (SWOT)</div>
+  <div class="swot-grid">
+    <div class="swot-box sw-s" data-l="S"><div class="swot-head"><span style="font-size:24px">💪</span><span class="sw-lbl">نقاط القوة</span><span class="sw-tag">Strengths</span></div><ul class="swot-list"><li>غالبية المعلمين على درجة عالية من الكفاءة</li><li>عدد الطلاب مناسب وموقع المدرسة ملائم</li><li>قرب المدرسة من منازل الطلاب والمدارس الأخرى</li><li>بيئة المدرسة تساعد على العمل والتعلم</li></ul></div>
+    <div class="swot-box sw-w" data-l="W"><div class="swot-head"><span style="font-size:24px">⚠️</span><span class="sw-lbl">نقاط الضعف</span><span class="sw-tag">Weaknesses</span></div><ul class="swot-list"><li>بعد المدرسة عن سكن بعض المعلمين</li><li>عدم وجود ملعب مجهز للأنشطة الرياضية</li><li>نقص بعض تجهيزات المدرسة</li><li>زيادة الطلب على القبول ترفع كثافة الفصول</li></ul></div>
+    <div class="swot-box sw-o" data-l="O"><div class="swot-head"><span style="font-size:24px">🌟</span><span class="sw-lbl">الفرص</span><span class="sw-tag">Opportunities</span></div><ul class="swot-list"><li>دورات تدريبية مستمرة داخل المدرسة وخارجها</li><li>تمويل الأنشطة من جهات خاصة ومجتمعية</li><li>تعاون أولياء الأمور مع إدارة المدرسة</li><li>علاقات جيدة مع المدارس المحيطة وتبادل الخبرات</li></ul></div>
+    <div class="swot-box sw-t" data-l="T"><div class="swot-head"><span style="font-size:24px">🔴</span><span class="sw-lbl">التهديدات</span><span class="sw-tag">Threats</span></div><ul class="swot-list"><li>غياب المعلم وكثرة التأخر</li><li>ضعف متابعة تفعيل بعض البرامج والأنشطة</li><li>عدم وجود رائد نشاط مفرغ للمدرسة</li><li>ضعف حضور الأنشطة الخارجية والطابور الصباحي</li></ul></div>
+  </div>
+</div>
+
+<div id="panel-tracking" class="panel">
+  <div class="sec-title"><div class="sec-icon si-g">📋</div> سجل المتابعة الشامل</div>
+  <div class="track-wrap">
+    <div class="track-head"><h3>📋 جميع البرامج والحالة الحالية</h3><button class="exp-btn" onclick="showModal()">📊 تقرير الإنجاز</button></div>
+    <div style="overflow-x:auto"><table><thead><tr><th>#</th><th>المحور</th><th>البرنامج</th><th>التوقيت</th><th>الحالة</th><th>الملاحظات</th><th>آخر تحديث</th></tr></thead><tbody id="track-tbody"></tbody></table></div>
+  </div>
+</div>
+
+<div class="footer"><strong>الخطة التشغيلية التفاعلية 1447هـ</strong> — مدرسة سمرة بن جندب الابتدائية<br><span style="font-size:12px;margin-top:4px;display:block">☁️ Firebase Realtime Sync • آخر مزامنة: <span id="last-sync">—</span></span></div>
+</div>
+</div>
+
+<div class="toast" id="toast"></div>
+<div class="modal-ov" id="modal-ov" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal">
+    <div class="modal-hd"><span class="modal-ttl">📊 تقرير الإنجاز الإجمالي</span><button class="modal-x" onclick="document.getElementById('modal-ov').classList.remove('open')">×</button></div>
+    <p style="font-size:15px;color:var(--mu);margin-bottom:20px;line-height:1.6" id="modal-body">ملخص تنفيذ الخطة التشغيلية للعام 1447هـ</p>
+    <div class="mstats"><div class="mst ms-g"><span>تم تنفيذه</span><strong id="m-d">0</strong></div><div class="mst ms-a"><span>قيد التنفيذ</span><strong id="m-p">0</strong></div><div class="mst ms-r"><span>لم يُنفَّذ</span><strong id="m-n">0</strong></div></div>
+    <div style="height:180px;margin-bottom:20px"><canvas id="modalChart" role="img" aria-label="ملخص الإنجاز">ملخص</canvas></div>
+    <button class="modal-btn" onclick="document.getElementById('modal-ov').classList.remove('open')">حسناً</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     FIREBASE + APP LOGIC
+══════════════════════════════════════════ -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, doc, setDoc, onSnapshot, getDoc }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+// ══ FIREBASE CONFIG ══
+const firebaseConfig = {
+  apiKey: "AIzaSyDJh3oJKntrLmfbrw6m0dD8FK-g09KyeXE",
+  authDomain: "khtta-samura-1447.firebaseapp.com",
+  projectId: "khtta-samura-1447",
+  storageBucket: "khtta-samura-1447.firebasestorage.app",
+  messagingSenderId: "424302790245",
+  appId: "1:424302790245:web:c6878a1c2546cd099e288c"
+};
+
+const app  = initializeApp(firebaseConfig);
+const db   = getFirestore(app);
+const auth = getAuth(app);
+
+// ══ PROGRAMS DATA ══
+const PROGRAMS = {
+  students:{label:'الطلاب',icon:'🎒',color:'#0d7f5f',axes:[
+    {title:'🕌 ترسيخ العقيدة الإسلامية',style:'ah-em',goals:[
+      {id:'s1',name:'برنامج الصلاة',chips:['cg:انتظام 100%','cb:الفصلان','cm:رائد النشاط'],timing:'أسبوع 1'},
+      {id:'s2',name:'برنامج القيم والأخلاق',chips:['cg:التزام 90%','cb:الفصلان','cm:النشاط الطلابي'],timing:'أسبوع 3'},
+      {id:'s3',name:'اليوم الوطني',chips:['cg:الولاء 100%','cd:أسبوع 6','cm:رائد النشاط'],timing:'أسبوع 6'},
+    ]},
+    {title:'📈 الرعاية التحصيلية',style:'ah-bl',goals:[
+      {id:'s4',name:'تكريم المتفوقين',chips:['cg:المنافسة 95%','cb:حفل + جوائز','cm:الموجه الطلابي'],timing:'أسبوع 4'},
+      {id:'s5',name:'البرامج العلاجية للطلاب الضعاف',chips:['cd:أسبوع 11-12','cb:دروس علاجية','cm:الإشراف التربوي'],timing:'أسبوع 11-12'},
+      {id:'s6',name:'الاختبارات المعيارية',chips:['cb:الفصل الأول','cm:الوكيل + المعلمون'],timing:'الفصل الأول'},
+    ]},
+    {title:'🛡️ الرعاية التربوية',style:'ah-gd',goals:[
+      {id:'s7',name:'متابعة ظاهرة الغياب والتأخر',chips:['cd:أسبوع 4-10','cm:مدير المدرسة'],timing:'أسبوع 4-10'},
+      {id:'s8',name:'الغياب بعد الإجازات وقبلها',chips:['cd:أسبوع 12-1','cm:الموجه الطلابي'],timing:'أسبوع 12-1'},
+    ]},
+    {title:'❤️ الرعاية الصحية والاجتماعية',style:'ah-em',goals:[
+      {id:'s9',name:'الحالة الصحية للطلاب',chips:['cg:عادات 90%','cb:أسبوع 1-2','cm:مركز صحي الحي'],timing:'أسبوع 1-2'},
+      {id:'s10',name:'البرنامج الإرشادي رفق',chips:['cg:متابعة 100%','cb:الفصلان','cm:الموجه الطلابي'],timing:'مستمر'},
+    ]},
+    {title:'⭐ رعاية الطلاب الموهوبين',style:'ah-pu',goals:[
+      {id:'s11',name:'اكتشاف المواهب',chips:['cb:سنة كاملة','cm:منسق الموهوبين'],timing:'مستمر'},
+      {id:'s12',name:'تفعيل أسبوع الموهبة',chips:['cb:معرض فني + محاضرات','cm:منسق الموهوبين'],timing:'يحدد لاحقاً'},
+    ]},
+    {title:'🏅 بناء القيادات الطلابية',style:'ah-nv',goals:[
+      {id:'s13',name:'منح الطلاب أدواراً قيادية',chips:['cd:أسبوع 4','cm:مدير المدرسة'],timing:'أسبوع 4'},
+      {id:'s14',name:'تنفيذ برامج العمل الجماعي',chips:['cg:مشاركة 70%','cb:الفصلان'],timing:'مستمر'},
+    ]},
+    {title:'🚀 تعزيز دافعية التعلم',style:'ah-bl',full:true,goals:[
+      {id:'s15',name:'الطالب المبتكر والباحث',chips:['cb:أسبوع 6','cm:منسق المصادر'],timing:'أسبوع 6'},
+      {id:'s16',name:'تنظيم مسابقات رياضية وترفيهية',chips:['cd:مستمر طوال العام','cm:معلم التربية الرياضية'],timing:'مستمر'},
+    ]},
+  ]},
+  teachers:{label:'المعلمون',icon:'📚',color:'#1d4ed8',axes:[
+    {title:'📋 تعريف المعلم بواجباته',style:'ah-bl',goals:[
+      {id:'t1',name:'المعلم المربي',chips:['cg:فهم الدور التربوي','cb:مستمر','cm:مدير المدرسة'],timing:'مستمر'},
+      {id:'t2',name:'نشرة واجبات المعلم',chips:['cd:أسبوع 1','cm:مدير المدرسة'],timing:'أسبوع 1'},
+    ]},
+    {title:'🔬 تطوير الطرق والأساليب',style:'ah-nv',goals:[
+      {id:'t3',name:'الخصائص النمائية للمرحلة',chips:['cb:ورشة تدريبية','cm:المشرف التربوي'],timing:'مستمر'},
+      {id:'t4',name:'أثر الفروق الفردية',chips:['cb:ورشة + اجتماعات','cm:رائد النشاط'],timing:'مستمر'},
+    ]},
+    {title:'🏆 التنمية المهنية',style:'ah-gd',goals:[
+      {id:'t5',name:'صلاحيات مدير المدرسة للوكيل',chips:['cg:ممارسة 100%','cb:من كل فصل'],timing:'كل فصل'},
+      {id:'t6',name:'المعلم المميز',chips:['cg:تطبيق 95%','cb:مستمر'],timing:'مستمر'},
+    ]},
+    {title:'🌟 تمثيل القدوة الحسنة',style:'ah-em',goals:[
+      {id:'t7',name:'المعلم القدوة',chips:['cb:ملاحظة مستمرة','cm:رائد النشاط'],timing:'مستمر'},
+      {id:'t8',name:'الانضباط المدرسي',chips:['cg:الدوام 100%','cb:مستمر'],timing:'مستمر'},
+    ]},
+    {title:'💡 كفايات التدريس الحديث',style:'ah-bl',full:true,goals:[
+      {id:'t9',name:'التعلم النشط',chips:['cg:تطبيق 90%','cd:الفصل الثاني'],timing:'الفصل الثاني'},
+      {id:'t10',name:'الدروس التطبيقية',chips:['cg:تنفيذ 90%','cb:الفصلان'],timing:'يحدد لاحقاً'},
+    ]},
+  ]},
+  curriculum:{label:'المنهج',icon:'📖',color:'#c4973a',axes:[
+    {title:'✨ إثراء المناهج',style:'ah-em',goals:[
+      {id:'c1',name:'دور المعلم في تطوير المقررات',chips:['cg:مناهج مطورة','cb:آخر كل فصل'],timing:'آخر كل فصل'},
+      {id:'c2',name:'تهيئة المكتبة وتغذيتها',chips:['cg:مراجع متوفرة','cb:مستمر'],timing:'مستمر'},
+    ]},
+    {title:'🏫 البيئة الفصلية الجاذبة',style:'ah-gd',goals:[
+      {id:'c3',name:'توفير وسائل تعليمية وتقنية حديثة',chips:['cd:أسبوع 4','cm:معلم الحاسب'],timing:'أسبوع 4'},
+    ]},
+    {title:'📗 المحافظة على الكتاب المدرسي',style:'ah-nv',goals:[
+      {id:'c4',name:'تبصير الطلاب بأهمية الكتاب المدرسي',chips:['cg:المحافظة','cb:مستمر'],timing:'مستمر'},
+    ]},
+    {title:'🎨 تسخير النشاط لخدمة المنهج',style:'ah-pu',goals:[
+      {id:'c5',name:'توزيع الطلاب على الأنشطة',chips:['cd:أسبوع 1-2','cm:مدير المدرسة'],timing:'أسبوع 1-2'},
+      {id:'c6',name:'إبراز مخرجات النشاط الجيدة',chips:['cg:طلاب مبتكرون','cb:مستمر'],timing:'مستمر'},
+    ]},
+  ]},
+  activity:{label:'النشاط',icon:'⚽',color:'#ec4899',axes:[
+    {title:'🌟 تفعيل النشاط الطلابي',style:'ah-em',full:true,goals:[
+      {id:'a1',name:'اليوم العالمي للنظافة',chips:['cg:اهتمام 90%','cb:مستمر'],timing:'مستمر'},
+      {id:'a2',name:'الأنشطة الطلابية حسب الخطة',chips:['cg:تحقيق 85%','cb:الفصلان'],timing:'مستمر'},
+    ]},
+  ]},
+  community:{label:'البيئة والمجتمع',icon:'🏘️',color:'#8b5cf6',axes:[
+    {title:'🤝 ربط المدرسة بالبيئة الاجتماعية',style:'ah-pu',full:true,goals:[
+      {id:'com1',name:'مدرستنا البيت الثاني لأبنائنا',chips:['cg:ربط 90%','cd:أسبوع 7'],timing:'أسبوع 7'},
+      {id:'com2',name:'مدرسة الحي لنا ونهوضها يخدمنا',chips:['cg:شراكة 60%','cd:أسبوع 5'],timing:'أسبوع 5'},
+    ]},
+  ]},
+  building:{label:'المبنى',icon:'🏛️',color:'#84cc16',axes:[
+    {title:'🏢 نظافة وسلامة المبنى المدرسي',style:'ah-gr',full:true,goals:[
+      {id:'b1',name:'أجمل صف — رفع الوعي بالمرافق',chips:['cg:محافظة 90%','cb:أسبوع 6'],timing:'أسبوع 6'},
+      {id:'b2',name:'خطة الإخلاء والأمن والسلامة',chips:['cg:وعي 100%','cb:الفصلان'],timing:'يحدد لاحقاً'},
+    ]},
+  ]}
+};
+
+// ══ STATE & CHARTS ══
+let state={}, charts={}, unsubscribe=null, currentUser=null;
+
+const C={em:'#0d7f5f',em2:'rgba(13,127,95,0.15)',gd:'#c4973a',
+  done:'#16a34a',pend:'#d97706',notd:'#dc2626',none:'#9ca3af'};
+
+// ══ HELPERS ══
+function allGoals(){
+  const r=[];
+  Object.entries(PROGRAMS).forEach(([sec,d])=>{
+    d.axes.forEach(ax=>ax.goals.forEach(g=>{r.push({...g,section:sec,secLabel:d.label,secColor:d.color});}));
+  });
+  return r;
+}
+function getCounts(){
+  const all=allGoals();
+  const d=all.filter(g=>(state[g.id]||{}).status==='done').length;
+  const p=all.filter(g=>(state[g.id]||{}).status==='pending').length;
+  const n=all.filter(g=>(state[g.id]||{}).status==='notdone').length;
+  return{total:all.length,done:d,pending:p,notdone:n,none:all.length-d-p-n};
+}
+function secCounts(sec){
+  const gs=allGoals().filter(g=>g.section===sec);
+  return{done:gs.filter(g=>(state[g.id]||{}).status==='done').length,total:gs.length};
+}
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('show'),2400);
+}
+function setFbStatus(type,msg){
+  const dot=document.getElementById('fb-dot');
+  const txt=document.getElementById('fb-status-text');
+  dot.className='fb-dot '+(type==='online'?'online':type==='syncing'?'syncing':'');
+  txt.textContent=msg;
+}
+
+// ══ AUTH ══
+window.doLogin=async function(){
+  const email=document.getElementById('li-email').value.trim();
+  const pass=document.getElementById('li-pass').value;
+  const btn=document.getElementById('li-btn');
+  const errEl=document.getElementById('li-err');
+  const txtEl=document.getElementById('li-text');
+  const spinEl=document.getElementById('li-spin');
+  errEl.classList.remove('show');
+  btn.disabled=true; txtEl.style.display='none'; spinEl.classList.add('show');
+  try{
+    await signInWithEmailAndPassword(auth,email,pass);
+  }catch(e){
+    let msg='❌ خطأ في تسجيل الدخول';
+    if(e.code==='auth/wrong-password'||e.code==='auth/invalid-credential') msg='❌ كلمة المرور غير صحيحة';
+    else if(e.code==='auth/user-not-found') msg='❌ البريد الإلكتروني غير مسجل';
+    else if(e.code==='auth/invalid-email') msg='❌ صيغة البريد الإلكتروني غير صحيحة';
+    else if(e.code==='auth/too-many-requests') msg='⚠️ محاولات كثيرة، يرجى الانتظار';
+    errEl.textContent=msg; errEl.classList.add('show');
+    btn.disabled=false; txtEl.style.display=''; spinEl.classList.remove('show');
+  }
+};
+window.doLogout=async function(){
+  if(unsubscribe) unsubscribe();
+  await signOut(auth);
+  state={};
+  document.getElementById('app').style.display='none';
+  document.getElementById('login-screen').style.display='flex';
+  document.getElementById('li-email').value='';
+  document.getElementById('li-pass').value='';
+  showToast('👋 تم تسجيل الخروج بنجاح');
+};
+
+// ══ FIRESTORE ══
+async function startRealtimeSync(){
+  setFbStatus('syncing','جاري المزامنة...');
+  const ref=doc(db,'schools','samura1447','state','programs');
+  // load once first
+  try{
+    const snap=await getDoc(ref);
+    if(snap.exists()){
+      const data=snap.data();
+      delete data._meta;
+      state=data;
+      buildGrids();
+      updateUI();
+      buildCharts();
+      buildTrackingTable();
+    } else {
+      buildGrids(); updateUI(); buildCharts(); buildTrackingTable();
+    }
+  }catch(e){
+    buildGrids(); updateUI(); buildCharts(); buildTrackingTable();
+  }
+  // realtime listener
+  unsubscribe=onSnapshot(ref,(snap)=>{
+    if(snap.exists()&&snap.metadata.hasPendingWrites===false){
+      const data=snap.data();
+      delete data._meta;
+      state=data;
+      buildGrids();
+      updateUI();
+      buildTrackingTable();
+      const now=new Date().toLocaleTimeString('ar-SA');
+      document.getElementById('last-sync').textContent=now;
+      setFbStatus('online','متصل بـ Firebase ✅');
+    }
+  },(err)=>{
+    setFbStatus('','خطأ في الاتصال ⚠️');
+  });
+}
+
+async function saveToFirebase(){
+  setFbStatus('syncing','جاري الحفظ...');
+  try{
+    const ref=doc(db,'schools','samura1447','state','programs');
+    await setDoc(ref,{...state,_meta:{savedAt:new Date().toISOString(),savedBy:currentUser?.email||'unknown'}},{merge:true});
+    const now=new Date().toLocaleTimeString('ar-SA');
+    document.getElementById('last-sync').textContent=now;
+    setFbStatus('online','تم الحفظ على Firebase ✅');
+  }catch(e){
+    setFbStatus('','فشل الحفظ ⚠️');
+    showToast('⚠️ فشل الحفظ — تحقق من الاتصال');
+  }
+}
+
+// ══ AUTH STATE OBSERVER ══
+onAuthStateChanged(auth,(user)=>{
+  if(user){
+    currentUser=user;
+    document.getElementById('login-screen').style.display='none';
+    document.getElementById('app').style.display='block';
+    const initials=user.email.substring(0,2).toUpperCase();
+    document.getElementById('fb-avatar').textContent=initials;
+    document.getElementById('fb-email').textContent=user.email;
+    startRealtimeSync();
+    showToast('🟢 مرحباً! تم تسجيل الدخول بنجاح');
+  }
+});
+
+// ══ STATUS SET ══
+window.setSt=async function(id,status){
+  if(!state[id]) state[id]={status:'none',notes:'',updatedAt:''};
+  state[id].status=status;
+  state[id].updatedAt=new Date().toISOString();
+  state[id].updatedBy=currentUser?.email||'unknown';
+  refreshGoal(id);
+  updateUI();
+  const msgs={done:'✅ تم تسجيل التنفيذ',pending:'⏳ تم تسجيل قيد التنفيذ',notdone:'❌ تم تسجيل عدم التنفيذ'};
+  showToast(msgs[status]);
+  await saveToFirebase();
+};
+window.saveN=async function(id){
+  const txt=document.getElementById('nt-'+id)?.value.trim()||'';
+  if(!state[id]) state[id]={status:'none',notes:'',updatedAt:''};
+  state[id].notes=txt;
+  state[id].updatedAt=new Date().toISOString();
+  const el=document.getElementById('sn-'+id);
+  if(el){el.textContent=txt?'📝 '+txt:'';el.classList.toggle('vis',!!txt);}
+  document.getElementById('nw-'+id)?.classList.remove('open');
+  buildTrackingTable();
+  showToast('💾 تم حفظ الملاحظة');
+  await saveToFirebase();
+};
+window.toggleN=function(id){document.getElementById('nw-'+id)?.classList.toggle('open');};
+
+// ══ UI UPDATE ══
+function updateUI(){
+  const c=getCounts();
+  const pct=c.total>0?Math.round((c.done/c.total)*100):0;
+  document.getElementById('h-total').textContent=c.total;
+  document.getElementById('h-done').textContent=c.done;
+  document.getElementById('h-pct').textContent=pct+'%';
+  document.getElementById('kpi-d').textContent=c.done;
+  document.getElementById('kpi-p').textContent=c.pending;
+  document.getElementById('kpi-n').textContent=c.notdone;
+  document.getElementById('kpi-u').textContent=c.none;
+  document.getElementById('op-pct').textContent=pct+'%';
+  document.getElementById('op-fill').style.width=pct+'%';
+  const shortMap={students:'s',teachers:'t',curriculum:'c',activity:'a',community:'com',building:'b'};
+  Object.keys(PROGRAMS).forEach(sec=>{
+    const el=document.getElementById('tc-'+shortMap[sec]);
+    if(el){const sc=secCounts(sec);el.textContent=sc.done+'/'+sc.total;}
+  });
+  updateCharts();
+}
+
+// ══ GRIDS ══
+function buildGrids(){
+  Object.keys(PROGRAMS).forEach(sec=>{
+    const el=document.getElementById('grid-'+sec);
+    if(!el) return;
+    el.innerHTML='';
+    PROGRAMS[sec].axes.forEach(ax=>{
+      const card=document.createElement('div');
+      card.className='axis-card'+(ax.full?' full':'');
+      card.innerHTML=`<div class="axis-header ${ax.style}">${ax.title}</div><div class="goal-list">${ax.goals.map(g=>goalHTML(g)).join('')}</div>`;
+      el.appendChild(card);
+    });
+  });
+}
+function goalHTML(g){
+  const st=state[g.id]||{status:'none',notes:'',updatedAt:''};
+  const chips=g.chips.map(c=>{const[cls,txt]=c.split(':');return`<span class="chip ${cls}">${txt}</span>`;}).join('');
+  const sn=st.notes?`<div class="saved-note vis" id="sn-${g.id}">📝 ${st.notes}</div>`:`<div class="saved-note" id="sn-${g.id}"></div>`;
+  const upd=st.updatedAt?`<span style="font-size:11px;color:var(--mu);margin-right:8px">🕐 ${new Date(st.updatedAt).toLocaleDateString('ar-SA')}</span>`:'';
+  return`<div class="goal-item ${st.status}" id="gi-${g.id}">
+    <div class="goal-name">${g.name}${upd}</div>
+    <div class="goal-chips">${chips}<span class="chip cm">🕐 ${g.timing}</span></div>
+    <div class="status-btns">
+      <button class="sbtn sb-d ${st.status==='done'?'on':''}" onclick="setSt('${g.id}','done')">✅ تم التنفيذ</button>
+      <button class="sbtn sb-p ${st.status==='pending'?'on':''}" onclick="setSt('${g.id}','pending')">⏳ قيد التنفيذ</button>
+      <button class="sbtn sb-n ${st.status==='notdone'?'on':''}" onclick="setSt('${g.id}','notdone')">❌ لم يُنفَّذ</button>
+      <button class="tb" onclick="toggleN('${g.id}')">📝 ملاحظة</button>
+    </div>
+    <div class="notes-wrap" id="nw-${g.id}">
+      <textarea class="goal-notes" id="nt-${g.id}" placeholder="أضف ملاحظاتك...">${st.notes||''}</textarea>
+      <button class="nsave" onclick="saveN('${g.id}')">💾 حفظ على Firebase</button>
+    </div>
+    ${sn}
+  </div>`;
+}
+function refreshGoal(id){
+  const el=document.getElementById('gi-'+id);
+  if(!el) return;
+  let g=null;
+  Object.values(PROGRAMS).forEach(d=>d.axes.forEach(ax=>ax.goals.forEach(gg=>{if(gg.id===id)g=gg;})));
+  if(!g) return;
+  const tmp=document.createElement('div');
+  tmp.innerHTML=goalHTML(g);
+  el.parentNode.replaceChild(tmp.firstElementChild,el);
+}
+
+// ══ TRACKING TABLE ══
+function buildTrackingTable(){
+  const tbody=document.getElementById('track-tbody');
+  if(!tbody) return;
+  const all=allGoals();
+  const sm={done:'<span class="ts ts-d">✅ تم التنفيذ</span>',pending:'<span class="ts ts-p">⏳ قيد التنفيذ</span>',notdone:'<span class="ts ts-n">❌ لم يُنفَّذ</span>',none:'<span class="ts ts-0">— لم يُحدَّث</span>'};
+  tbody.innerHTML=all.map((g,i)=>{
+    const st=state[g.id]||{status:'none',notes:'',updatedAt:''};
+    const upd=st.updatedAt?new Date(st.updatedAt).toLocaleDateString('ar-SA'):'—';
+    return`<tr><td><div class="wbadge">${i+1}</div></td><td style="font-size:14px;color:var(--em-d);font-weight:600">${g.secLabel}</td><td style="font-weight:600;font-size:15px">${g.name}</td><td style="font-size:13px;color:var(--mu)">${g.timing}</td><td>${sm[st.status]||sm.none}</td><td style="font-size:13px;color:var(--mu)">${st.notes||'—'}</td><td style="font-size:12px;color:var(--mu)">${upd}</td></tr>`;
+  }).join('');
+}
+
+// ══ CHARTS ══
+function buildCharts(){
+  const c=getCounts();
+  // Donut
+  const ctxD=document.getElementById('chartDonut').getContext('2d');
+  charts.donut=new Chart(ctxD,{type:'doughnut',data:{labels:['تم التنفيذ','قيد التنفيذ','لم يُنفَّذ','لم يُحدَّث'],datasets:[{data:[c.done,c.pending,c.notdone,c.none],backgroundColor:[C.done,C.pend,C.notd,C.none],borderWidth:3,borderColor:'#fff',hoverOffset:6}]},options:{responsive:true,maintainAspectRatio:false,cutout:'68%',plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.label}: ${ctx.raw} برنامج`}}}}});
+  buildLegendDonut(c);
+  // Bar
+  const ctxB=document.getElementById('chartBar').getContext('2d');
+  const secLabels=Object.values(PROGRAMS).map(d=>d.label);
+  const doneData=Object.keys(PROGRAMS).map(sec=>{const sc=secCounts(sec);return sc.total>0?Math.round((sc.done/sc.total)*100):0;});
+  charts.bar=new Chart(ctxB,{type:'bar',data:{labels:secLabels,datasets:[{label:'نسبة الإنجاز %',data:doneData,backgroundColor:Object.values(PROGRAMS).map(d=>d.color+'cc'),borderRadius:8,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`${ctx.raw}%`}}},scales:{x:{min:0,max:100,ticks:{callback:v=>v+'%',font:{size:12}},grid:{color:'rgba(0,0,0,0.05)'}},y:{ticks:{font:{size:13,weight:'600'}}}}}});
+  // Line
+  const ctxL=document.getElementById('chartLine').getContext('2d');
+  charts.line=new Chart(ctxL,{type:'line',data:{labels:['الصلاة','القيم','الوطني','المتفوقين','الصحة','رفق','الدوام','التعلم النشط','الدروس','أجمل صف','الإخلاء'],datasets:[{label:'المستهدف %',data:[100,90,100,95,90,100,100,90,90,90,100],borderColor:C.em,backgroundColor:C.em2,tension:0.4,pointBackgroundColor:C.em,pointRadius:5,pointHoverRadius:7,fill:true,borderWidth:2.5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:50,max:105,ticks:{callback:v=>v+'%',font:{size:12}}},x:{ticks:{font:{size:11}}}}}});
+  // Radar
+  const ctxR=document.getElementById('chartRadar').getContext('2d');
+  charts.radar=new Chart(ctxR,{type:'radar',data:{labels:['الطلاب','المعلمون','المنهج','النشاط','البيئة','المبنى'],datasets:[{label:'البرامج',data:[16,10,6,2,2,2],backgroundColor:'rgba(13,127,95,0.15)',borderColor:C.em,pointBackgroundColor:C.em,borderWidth:2,pointRadius:4},{label:'الإنجاز',data:[0,0,0,0,0,0],backgroundColor:'rgba(196,151,58,0.12)',borderColor:C.gd,pointBackgroundColor:C.gd,borderWidth:2,pointRadius:4,borderDash:[5,3]}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{r:{min:0,max:16,ticks:{stepSize:4,font:{size:10}},pointLabels:{font:{size:12,weight:'600'}}}}}});
+  // Mini
+  const ctxM=document.getElementById('chartMini').getContext('2d');
+  charts.mini=new Chart(ctxM,{type:'bar',data:{labels:['الطلاب','المعلمون','المنهج','النشاط','البيئة','المبنى'],datasets:[{label:'البرامج',data:[16,10,6,2,2,2],backgroundColor:['#0d7f5fcc','#1d4ed8cc','#c4973acc','#ec4899cc','#8b5cf6cc','#84cc16cc'],borderRadius:8,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{stepSize:2,font:{size:12}}},x:{ticks:{font:{size:11}}}}}});
+  // Stacked
+  const ctxS=document.getElementById('chartStacked').getContext('2d');
+  charts.stacked=new Chart(ctxS,{type:'bar',data:{labels:['الطلاب','المعلمون','المنهج','النشاط','البيئة والمجتمع','المبنى المدرسي'],datasets:[{label:'عدد البرامج',data:[16,10,6,2,2,2],backgroundColor:'rgba(13,127,95,0.75)',borderRadius:6,stack:'a'},{label:'عدد الأهداف',data:[7,5,4,1,1,1],backgroundColor:'rgba(196,151,58,0.75)',borderRadius:6,stack:'b'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:13,weight:'600'}}},y:{beginAtZero:true,ticks:{stepSize:2,font:{size:12}}}}}});
+  document.getElementById('legendStacked').innerHTML=`<div class="leg-item"><div class="leg-dot" style="background:rgba(13,127,95,0.75)"></div>عدد البرامج</div><div class="leg-item"><div class="leg-dot" style="background:rgba(196,151,58,0.75)"></div>عدد الأهداف</div>`;
+}
+function buildLegendDonut(c){
+  document.getElementById('legendDonut').innerHTML=[['تم التنفيذ',C.done,c.done],['قيد التنفيذ',C.pend,c.pending],['لم يُنفَّذ',C.notd,c.notdone],['لم يُحدَّث',C.none,c.none]].map(([l,col,v])=>`<div class="leg-item"><div class="leg-dot" style="background:${col}"></div>${l}: <strong>${v}</strong></div>`).join('');
+}
+function updateCharts(){
+  if(!charts.donut) return;
+  const c=getCounts();
+  charts.donut.data.datasets[0].data=[c.done,c.pending,c.notdone,c.none];
+  charts.donut.update();
+  buildLegendDonut(c);
+  const dD=Object.keys(PROGRAMS).map(sec=>{const sc=secCounts(sec);return sc.total>0?Math.round((sc.done/sc.total)*100):0;});
+  charts.bar.data.datasets[0].data=dD; charts.bar.update();
+  const rD=Object.keys(PROGRAMS).map(sec=>{const sc=secCounts(sec);return sc.total>0?Math.round(sc.done/sc.total*16):0;});
+  charts.radar.data.datasets[1].data=rD; charts.radar.update();
+}
+
+// ══ MODAL ══
+window.showModal=function(){
+  const c=getCounts();
+  const pct=Math.round((c.done/c.total)*100);
+  document.getElementById('modal-body').textContent=`إجمالي البرامج: ${c.total} • نسبة الإنجاز: ${pct}%`;
+  document.getElementById('m-d').textContent=c.done;
+  document.getElementById('m-p').textContent=c.pending;
+  document.getElementById('m-n').textContent=c.notdone;
+  document.getElementById('modal-ov').classList.add('open');
+  setTimeout(()=>{
+    const ctx=document.getElementById('modalChart').getContext('2d');
+    if(charts.modal) charts.modal.destroy();
+    charts.modal=new Chart(ctx,{type:'doughnut',data:{labels:['تم التنفيذ','قيد التنفيذ','لم يُنفَّذ','لم يُحدَّث'],datasets:[{data:[c.done,c.pending,c.notdone,c.none],backgroundColor:[C.done,C.pend,C.notd,C.none],borderWidth:3,borderColor:'#fff'}]},options:{responsive:true,maintainAspectRatio:false,cutout:'60%',plugins:{legend:{position:'bottom',labels:{font:{size:13},paddi
